@@ -1,5 +1,5 @@
 <script>
-	export let data
+	let { data } = $props();
 </script>
 
 <svelte:head>
@@ -7,12 +7,16 @@
 	<meta name="description" content={data.description} />
 </svelte:head>
 
-<div class="bg-white bg-opacity-75 hover:bg-opacity-100 transition duration-500 rounded-lg max-w-screen-md mx-auto p-4 mb-4 text-center">
+<div
+	class="bg-white bg-opacity-75 hover:bg-opacity-100 transition duration-500 rounded-lg max-w-3xl mx-auto p-4 mb-4 text-center"
+>
 	<h1 class="text-3xl font-semibold mb-6">{data.title}</h1>
 	<p class="text-xl font-medium mb-4">{data.description}</p>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-4">
-	{#each data.blogs as item, index (`blog-${index}`)}		
+<div
+	class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 my-4"
+>
+	{#each data.blogs as item, index (`blog-${index}`)}
 		<div
 			class="bg-white bg-opacity-75 hover:bg-opacity-100 transition duration-500 rounded-lg"
 		>
@@ -20,13 +24,14 @@
 			<h2 class="text-2xl pt-4 px-4 font-semibold">{item.title}</h2>
 			<p class="italic my-2 px-4 ml-2">
 				<span class="">
-					{new Date(item.date).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}
+					{new Date(item.date).toLocaleDateString(undefined, {
+						day: "numeric",
+						month: "short",
+						year: "numeric",
+					})}
 				</span>
-				{#each item.tags as itemSec, indexSec (`blog-${index}-tag-${indexSec}`)}	
-					<a
-						class="underline"
-						href="/#"
-					>
+				{#each item.tags as itemSec, indexSec (`blog-${index}-tag-${indexSec}`)}
+					<a class="underline" href="/#">
 						{itemSec}
 					</a>
 				{/each}
@@ -41,7 +46,21 @@
 				<span class="font-medium">Read </span>
 				<span class="">
 					<!-- https://feathericons.com/ chevrons-right -->
-					<svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+					<svg
+						class=""
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						><polyline points="13 17 18 12 13 7"></polyline><polyline
+							points="6 17 11 12 6 7"
+						></polyline></svg
+					>
 				</span>
 			</a>
 		</div>

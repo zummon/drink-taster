@@ -1,33 +1,25 @@
-const markdowns = import.meta.glob('./content/blog/*.md');
+import blogs from "./content/blogs.json";
 
-export const getBlogs = async () => {
+export function getBlogs() {
 	let result = [];
 
-	for (const path in markdowns) {
-		await markdowns[path]().then((markdown) => {
-			let content = markdown.default;
-			let metadata = markdown.metadata;
-			let slug = path.split('/').pop().slice(0, -3);
+	for (const blog of blogs) {
 
-			result.push({
-				...metadata,
-				content,
-				slug,
-			});
+		result.push({
+			...blog,
 		});
 	}
 
 	return result;
 };
 
-export const getBlog = async (file) => {
-	let markdown = await import(`./content/blog/${file}.md`)
+export async function getBlog(file) {
+	let content = await import(`./content/blog/${file}.json`)
 
-	let content = markdown.default;
-	let metadata = markdown.metadata;
+	let blog = blogs.find((blog) => blog.slug === file);
 
 	return {
-		...metadata,
+		...blog,
 		content,
 	}
 }

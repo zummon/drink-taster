@@ -1,7 +1,7 @@
 <script>
 	import '../app.css';
 
-	export let data
+	let {data, children} = $props()
 
 	let navs = [
 		{path:'/about',text:'About'},
@@ -32,13 +32,14 @@
 </div>
 
 <div class="mx-4">
-	<slot />
+	{@render children()}
 </div>
 
 <div class="my-4 mr-4 ml-auto flex flex-wrap justify-end bg-white bg-opacity-75 rounded-lg w-fit">
 	<p class="py-3 px-4">
 		<span class="font-medium">
-			Made by zummon (Teerapat Anantarattanachai)
+			Made by Antigravity, Teerapat Anantarattanachai<br>
+			Something breaks, needs upgrade. Let me know
 		</span>
 	</p>
 </div>

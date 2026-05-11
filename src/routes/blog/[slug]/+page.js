@@ -2,10 +2,10 @@ import { getBlog } from "../../../lib/getBlogs";
 
 export const prerender = true;
 
-export const load = async ({ params }) => {
-	let md = await getBlog(params.slug)
+export function load({ params }) {
+	let md = getBlog(params.slug);
 
 	return {
-		...md
-	}
+		...md,
+	};
 }

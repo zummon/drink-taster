@@ -1,7 +1,6 @@
-export const load = async ({ url }) => {
-	
+export async function load({ url }) {
 	return {
-		siteName: 'Drink Taster' ,
+		siteName: 'Drink Taster',
 		pathname: url.pathname
 	}
 }

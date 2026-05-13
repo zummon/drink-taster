@@ -1,23 +1,22 @@
 <script>
+	import { cart } from "$lib/cart.svelte.js";
+	import { goto } from "$app/navigation";
 	let { data } = $props();
 
+	import { products, categories } from "$lib/db.js";
+
 	// 1. Define reactive variables using Svelte 5 $state
-	let drinkType = $state("Cocoa");
+	let drinkType = $state(categories[0]);
 	let temperature = $state("Cold");
 	let sweetnessLevel = $state(50); // Represented as a percentage
 	let creamScoops = $state(1);
 	let iceLevel = $state("Normal");
 
-	// Base prices for the drinks
-	const basePrices = {
-		Coffee: 60,
-		Cocoa: 65,
-		Tea: 50,
-	};
-
 	// 2. Automatically calculate total price using $derived
 	let totalPrice = $derived.by(() => {
-		let price = basePrices[drinkType] || 50;
+		// Find the first product in the category to get a base price (or use a default)
+		const categoryProducts = products.filter(p => p.category === drinkType);
+		let price = categoryProducts.length > 0 ? categoryProducts[0].price : 50;
 
 		// Cold drinks and Frappes might cost more
 		if (temperature === "Cold") price += 5;
@@ -54,6 +53,18 @@
 			color: "text-blue-600",
 		};
 	});
+
+	function addToCart() {
+		const customDrink = {
+			name: `Custom ${drinkType} (${temperature})`,
+			category: drinkType,
+			price: totalPrice,
+			imgSrc: products.find(p => p.category === drinkType)?.imgSrc || "https://i.imgur.com/e2qFUQa.jpeg",
+			imgAlt: "Custom Drink"
+		};
+		cart.addItem(customDrink);
+		goto("/ordered");
+	}
 </script>
 
 <svelte:head>
@@ -62,55 +73,55 @@
 </svelte:head>
 
 <div
-	class="bg-white bg-opacity-75 hover:bg-opacity-100 transition duration-500 rounded-lg max-w-3xl mx-auto p-4 mb-4 text-center"
+	class="glass-card max-w-3xl mx-auto p-8 mb-8 text-center"
 >
-	<h1 class="text-3xl font-semibold mb-6">{data.title}</h1>
-	<p class="text-xl font-medium mb-4">{data.description}</p>
+	<h1 class="text-4xl font-bold mb-4 text-rustic-terracotta">{data.title}</h1>
+	<p class="text-xl font-medium text-earth-brown/80">{data.description}</p>
 </div>
 
 <div
-	class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg border border-gray-100 font-sans"
+	class="max-w-md mx-auto mt-10 p-8 glass-card border-none"
 >
-	<h1 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
-		Customize Your Drink
+	<h1 class="text-2xl font-bold text-earth-brown mb-8 border-b border-soft-sage/20 pb-4">
+		Craft Your Perfect Brew
 	</h1>
 
 	<!-- Drink Type Selection -->
-	<div class="mb-4">
-		<label class="block text-sm font-medium text-gray-700 mb-1" for="drinkType"
-			>Drink Type</label
+	<div class="mb-6">
+		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="drinkType"
+			>Select Your Base</label
 		>
 		<select
 			id="drinkType"
 			bind:value={drinkType}
-			class="w-full border-gray-300 rounded-lg shadow-sm p-2 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+			class="input-field"
 		>
-			<option value="Coffee">Coffee</option>
-			<option value="Cocoa">Cocoa</option>
-			<option value="Tea">Tea</option>
+			{#each categories as category}
+				<option value={category}>{category}</option>
+			{/each}
 		</select>
 	</div>
 
 	<!-- Temperature Selection -->
-	<div class="mb-4">
-		<label class="block text-sm font-medium text-gray-700 mb-1" for="temp"
+	<div class="mb-6">
+		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="temp"
 			>Temperature</label
 		>
 		<select
 			id="temp"
 			bind:value={temperature}
-			class="w-full border-gray-300 rounded-lg shadow-sm p-2 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+			class="input-field"
 		>
-			<option value="Hot">Hot</option>
-			<option value="Cold">Cold (+5)</option>
-			<option value="Frappe">Frappe (+15)</option>
+			<option value="Hot">🔥 Hot</option>
+			<option value="Cold">❄️ Cold (+฿5)</option>
+			<option value="Frappe">🌪️ Frappe (+฿15)</option>
 		</select>
 	</div>
 
 	<!-- Sweetness Slider -->
-	<div class="mb-4">
-		<label class="block text-sm font-medium text-gray-700 mb-1" for="sweetness">
-			Sweetness: {sweetnessLevel}%
+	<div class="mb-6">
+		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="sweetness">
+			Sweetness Level: <span class="text-rustic-terracotta font-bold">{sweetnessLevel}%</span>
 		</label>
 		<input
 			id="sweetness"
@@ -119,14 +130,14 @@
 			max="150"
 			step="25"
 			bind:value={sweetnessLevel}
-			class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+			class="w-full h-2 bg-soft-sage/20 rounded-lg appearance-none cursor-pointer accent-soft-sage"
 		/>
 	</div>
 
 	<!-- Cream Counter -->
-	<div class="mb-4">
-		<label class="block text-sm font-medium text-gray-700 mb-1" for="cream">
-			Cream (Scoops): {creamScoops}
+	<div class="mb-6">
+		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="cream">
+			Cream Scoops: <span class="text-rustic-terracotta font-bold">{creamScoops}</span>
 		</label>
 		<input
 			id="cream"
@@ -135,100 +146,49 @@
 			max="5"
 			step="1"
 			bind:value={creamScoops}
-			class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+			class="w-full h-2 bg-soft-sage/20 rounded-lg appearance-none cursor-pointer accent-soft-sage"
 		/>
 	</div>
 
 	<!-- Ice Level (Only show if not hot) -->
 	{#if temperature !== "Hot"}
-		<div class="mb-6">
-			<label class="block text-sm font-medium text-gray-700 mb-1" for="ice"
+		<div class="mb-8">
+			<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="ice"
 				>Ice Level</label
 			>
 			<select
 				id="ice"
 				bind:value={iceLevel}
-				class="w-full border-gray-300 rounded-lg shadow-sm p-2 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+				class="input-field"
 			>
-				<option value="Less">Less Ice</option>
-				<option value="Normal">Normal Ice</option>
-				<option value="Extra">Extra Ice</option>
+				<option value="Less">🧊 Less Ice</option>
+				<option value="Normal">🧊 Normal Ice</option>
+				<option value="Extra">🧊 Extra Ice</option>
 			</select>
 		</div>
 	{/if}
 
 	<!-- Health Recommendation Feedback -->
 	<div
-		class="mb-6 p-3 rounded-lg bg-gray-50 border border-gray-100 text-sm {healthMessage.color}"
+		class="mb-8 p-4 rounded-xl bg-white/40 border border-soft-sage/10 text-sm italic {healthMessage.color}"
 	>
-		<p>{healthMessage.text}</p>
+		<p class="flex items-center gap-2">
+			<span>✨</span> {healthMessage.text}
+		</p>
 	</div>
 
 	<!-- Price Calculation -->
 	<div
-		class="flex justify-between items-center bg-blue-50 p-4 rounded-xl border border-blue-100"
+		class="flex justify-between items-center bg-soft-sage/10 p-5 rounded-2xl border border-soft-sage/20 shadow-inner mb-6"
 	>
-		<span class="text-lg font-semibold text-gray-800">Total Price:</span>
-		<span class="text-2xl font-bold text-blue-600 font-mono">฿{totalPrice}</span
-		>
+		<span class="text-lg font-bold text-earth-brown">Total Price</span>
+		<span class="text-3xl font-black text-rustic-terracotta drop-shadow-sm">฿{totalPrice}</span>
 	</div>
 
-	<!-- Project Footer -->
-	<footer class="mt-8 text-center text-xs text-gray-400">
-		Made by Teerapat Anantarattanachai with help from Claude.ai.
-	</footer>
-</div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-	{#each data.blogs as item}
-		<div
-			class="bg-white bg-opacity-75 hover:bg-opacity-100 transition duration-500 rounded-lg"
-		>
-			<img
-				class="rounded-t-lg aspect-video object-cover"
-				src={item.cover.src}
-				alt={item.cover.alt}
-			/>
-			<h2 class="text-2xl pt-4 px-4 font-medium">{item.title}</h2>
-			<p class="italic my-2 px-4 ml-2">
-				<span class="">
-					{new Date(item.date).toLocaleDateString(undefined, {
-						day: "numeric",
-						month: "short",
-						year: "numeric",
-					})}
-				</span>
-				{#each item.tags as itemSec}
-					<a class="underline" href="/#">
-						{itemSec}
-					</a>
-				{/each}
-			</p>
-			<p class="text-lg px-4 ml-4">{item.description}</p>
-			<a
-				class="text-lg px-4 pb-4 italic flex items-center justify-end"
-				href="/blog/{item.slug}"
-			>
-				<span class="font-medium">Read </span>
-				<span class="">
-					<!-- https://feathericons.com/ chevrons-right -->
-					<svg
-						class=""
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						><polyline points="13 17 18 12 13 7"></polyline><polyline
-							points="6 17 11 12 6 7"
-						></polyline></svg
-					>
-				</span>
-			</a>
-		</div>
-	{/each}
+	<button 
+		onclick={addToCart}
+		class="w-full bg-rustic-terracotta text-white py-4 rounded-2xl text-lg font-bold hover:bg-earth-brown transition-all shadow-xl shadow-rustic-terracotta/20 active:scale-95"
+	>
+		Add to Order
+	</button>
 </div>

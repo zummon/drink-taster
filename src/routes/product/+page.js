@@ -1,5 +1,5 @@
-export async function load({}){
-	let products = await import(`../../lib/product.json`)
-	products = products.default
-	return {products}
+import { products } from "$lib/db.js";
+
+export async function load({}) {
+	return { products };
 }

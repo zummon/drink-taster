@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+@theme {
+  --color-warm-cream: #fdf6e3;
+  --color-soft-sage: #819b7a;
+  --color-rustic-terracotta: #c06c5d;
+  --color-earth-brown: #5d4037;
+  --color-sunny-yellow: #f7d08a;
+  --color-warm-glow: rgba(253, 246, 227, 0.85);
+}
+
+@layer base {
+  body {
+    @apply text-earth-brown bg-gradient-to-br from-warm-cream via-[#fffaf0] to-[#f9f1e0];
+  }
+}
+
+.glass-card {
+  @apply bg-warm-glow backdrop-blur-md border border-white/20 rounded-2xl shadow-xl transition-all duration-500;
+}
+
+.glass-card:hover {
+  @apply shadow-2xl scale-[1.01] bg-white/90;
+}
+
+.btn-primary {
+  @apply bg-soft-sage text-white px-6 py-2 rounded-full font-semibold hover:bg-rustic-terracotta transition-colors duration-300;
+}
+
+.input-field {
+  @apply w-full border-soft-sage/30 rounded-xl shadow-sm p-3 bg-white/50 focus:ring-2 focus:ring-soft-sage focus:border-soft-sage transition-all outline-none;
+}

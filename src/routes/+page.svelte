@@ -15,7 +15,7 @@
 	// 2. Automatically calculate total price using $derived
 	let totalPrice = $derived.by(() => {
 		// Find the first product in the category to get a base price (or use a default)
-		const categoryProducts = products.filter(p => p.category === drinkType);
+		const categoryProducts = products.filter((p) => p.category === drinkType);
 		let price = categoryProducts.length > 0 ? categoryProducts[0].price : 50;
 
 		// Cold drinks and Frappes might cost more
@@ -59,8 +59,10 @@
 			name: `Custom ${drinkType} (${temperature})`,
 			category: drinkType,
 			price: totalPrice,
-			imgSrc: products.find(p => p.category === drinkType)?.imgSrc || "https://i.imgur.com/e2qFUQa.jpeg",
-			imgAlt: "Custom Drink"
+			imgSrc:
+				products.find((p) => p.category === drinkType)?.imgSrc ||
+				"https://i.imgur.com/e2qFUQa.jpeg",
+			imgAlt: "Custom Drink",
 		};
 		cart.addItem(customDrink);
 		goto("/ordered");
@@ -72,30 +74,25 @@
 	<meta name="description" content={data.description} />
 </svelte:head>
 
-<div
-	class="glass-card max-w-3xl mx-auto p-8 mb-8 text-center"
->
+<div class="glass-card max-w-3xl mx-auto p-8 mb-8 text-center">
 	<h1 class="text-4xl font-bold mb-4 text-rustic-terracotta">{data.title}</h1>
 	<p class="text-xl font-medium text-earth-brown/80">{data.description}</p>
 </div>
 
-<div
-	class="max-w-md mx-auto mt-10 p-8 glass-card border-none"
->
-	<h1 class="text-2xl font-bold text-earth-brown mb-8 border-b border-soft-sage/20 pb-4">
+<div class="max-w-md mx-auto mt-10 p-8 glass-card border-none">
+	<h1
+		class="text-2xl font-bold text-earth-brown mb-8 border-b border-soft-sage/20 pb-4"
+	>
 		Craft Your Perfect Brew
 	</h1>
 
 	<!-- Drink Type Selection -->
 	<div class="mb-6">
-		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="drinkType"
-			>Select Your Base</label
+		<label
+			class="block text-sm font-semibold text-earth-brown/70 mb-2"
+			for="drinkType">Select Your Base</label
 		>
-		<select
-			id="drinkType"
-			bind:value={drinkType}
-			class="input-field"
-		>
+		<select id="drinkType" bind:value={drinkType} class="input-field">
 			{#each categories as category}
 				<option value={category}>{category}</option>
 			{/each}
@@ -104,14 +101,11 @@
 
 	<!-- Temperature Selection -->
 	<div class="mb-6">
-		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="temp"
-			>Temperature</label
+		<label
+			class="block text-sm font-semibold text-earth-brown/70 mb-2"
+			for="temp">Temperature</label
 		>
-		<select
-			id="temp"
-			bind:value={temperature}
-			class="input-field"
-		>
+		<select id="temp" bind:value={temperature} class="input-field">
 			<option value="Hot">🔥 Hot</option>
 			<option value="Cold">❄️ Cold (+฿5)</option>
 			<option value="Frappe">🌪️ Frappe (+฿15)</option>
@@ -120,8 +114,13 @@
 
 	<!-- Sweetness Slider -->
 	<div class="mb-6">
-		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="sweetness">
-			Sweetness Level: <span class="text-rustic-terracotta font-bold">{sweetnessLevel}%</span>
+		<label
+			class="block text-sm font-semibold text-earth-brown/70 mb-2"
+			for="sweetness"
+		>
+			Sweetness Level: <span class="text-rustic-terracotta font-bold"
+				>{sweetnessLevel}%</span
+			>
 		</label>
 		<input
 			id="sweetness"
@@ -136,8 +135,13 @@
 
 	<!-- Cream Counter -->
 	<div class="mb-6">
-		<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="cream">
-			Cream Scoops: <span class="text-rustic-terracotta font-bold">{creamScoops}</span>
+		<label
+			class="block text-sm font-semibold text-earth-brown/70 mb-2"
+			for="cream"
+		>
+			Cream Scoops: <span class="text-rustic-terracotta font-bold"
+				>{creamScoops}</span
+			>
 		</label>
 		<input
 			id="cream"
@@ -153,14 +157,11 @@
 	<!-- Ice Level (Only show if not hot) -->
 	{#if temperature !== "Hot"}
 		<div class="mb-8">
-			<label class="block text-sm font-semibold text-earth-brown/70 mb-2" for="ice"
-				>Ice Level</label
+			<label
+				class="block text-sm font-semibold text-earth-brown/70 mb-2"
+				for="ice">Ice Level</label
 			>
-			<select
-				id="ice"
-				bind:value={iceLevel}
-				class="input-field"
-			>
+			<select id="ice" bind:value={iceLevel} class="input-field">
 				<option value="Less">🧊 Less Ice</option>
 				<option value="Normal">🧊 Normal Ice</option>
 				<option value="Extra">🧊 Extra Ice</option>
@@ -173,7 +174,8 @@
 		class="mb-8 p-4 rounded-xl bg-white/40 border border-soft-sage/10 text-sm italic {healthMessage.color}"
 	>
 		<p class="flex items-center gap-2">
-			<span>✨</span> {healthMessage.text}
+			<span>✨</span>
+			{healthMessage.text}
 		</p>
 	</div>
 
@@ -182,12 +184,14 @@
 		class="flex justify-between items-center bg-soft-sage/10 p-5 rounded-2xl border border-soft-sage/20 shadow-inner mb-6"
 	>
 		<span class="text-lg font-bold text-earth-brown">Total Price</span>
-		<span class="text-3xl font-black text-rustic-terracotta drop-shadow-sm">฿{totalPrice}</span>
+		<span class="text-3xl font-black text-rustic-terracotta drop-shadow-sm"
+			>฿{totalPrice}</span
+		>
 	</div>
 
-	<button 
+	<button
 		onclick={addToCart}
-		class="w-full bg-rustic-terracotta text-white py-4 rounded-2xl text-lg font-bold hover:bg-earth-brown transition-all shadow-xl shadow-rustic-terracotta/20 active:scale-95"
+		class="cursor-pointer w-full bg-rustic-terracotta text-white py-4 rounded-2xl text-lg font-bold hover:bg-earth-brown transition-all shadow-xl shadow-rustic-terracotta/20 active:scale-95"
 	>
 		Add to Order
 	</button>

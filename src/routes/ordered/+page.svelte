@@ -50,7 +50,7 @@
 							</p>
 							<button
 								onclick={() => cart.removeItem(item.orderId)}
-								class="text-xs font-bold text-red-400 hover:text-red-600 transition-colors mt-1 opacity-0 group-hover:opacity-100"
+								class="cursor-pointer text-xs font-bold text-red-400 hover:text-red-600 transition-colors mt-1 opacity-0 group-hover:opacity-100"
 							>
 								Remove
 							</button>
@@ -73,7 +73,7 @@
 							alert("Thank you for your order! It will be ready soon.");
 							cart.clear();
 						}}
-						class="bg-rustic-terracotta text-white py-4 rounded-2xl text-lg font-bold hover:bg-earth-brown transition-all shadow-xl shadow-rustic-terracotta/20"
+						class="cursor-pointer bg-rustic-terracotta text-white py-4 rounded-2xl text-lg font-bold hover:bg-earth-brown transition-all shadow-xl shadow-rustic-terracotta/20"
 					>
 						Confirm Order
 					</button>

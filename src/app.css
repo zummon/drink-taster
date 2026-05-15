@@ -11,7 +11,7 @@
 
 @layer base {
   body {
-    @apply text-earth-brown bg-gradient-to-br from-warm-cream via-[#fffaf0] to-[#f9f1e0];
+    @apply text-earth-brown bg-linear-to-br from-warm-cream via-[#fffaf0] to-[#f9f1e0];
   }
 }
 

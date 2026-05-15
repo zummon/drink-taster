@@ -17,12 +17,12 @@
 		>
 			<div class="overflow-hidden rounded-2xl mb-6 shadow-md">
 				<img
-					class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-110"
+					class="aspect-4/3 w-full object-cover transition-transform duration-700 group-hover:scale-110"
 					src={item.imgSrc}
 					alt={item.imgAlt}
 				/>
 			</div>
-			<div class="flex-grow">
+			<div class="grow">
 				<div class="flex justify-between items-start mb-2">
 					<h3 class="text-xl font-bold text-earth-brown">{item.name}</h3>
 					<span

@@ -42,7 +42,7 @@
 				฿{data.product.price}
 			</p>
 
-			<div class="prose prose-stone mb-10 flex-grow">
+			<div class="prose prose-stone mb-10 grow">
 				<p
 					class="text-lg text-earth-brown/70 leading-relaxed italic border-l-4 border-soft-sage/30 pl-6"
 				>

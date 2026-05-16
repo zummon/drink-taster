@@ -54,7 +54,7 @@
 		};
 	});
 
-	function addToCart() {
+	function handleOrderNow() {
 		const customDrink = {
 			name: `Custom ${drinkType} (${temperature})`,
 			category: drinkType,
@@ -65,7 +65,7 @@
 			imgAlt: "Custom Drink",
 		};
 		cart.addItem(customDrink);
-		goto("/ordered");
+		goto("/basket");
 	}
 </script>
 
@@ -190,9 +190,9 @@
 	</div>
 
 	<button
-		onclick={addToCart}
+		onclick={handleOrderNow}
 		class="cursor-pointer w-full bg-rustic-terracotta text-white py-4 rounded-2xl text-lg font-bold hover:bg-earth-brown transition-all shadow-xl shadow-rustic-terracotta/20 active:scale-95"
 	>
-		Add to Order
+		Add to Basket
 	</button>
 </div>

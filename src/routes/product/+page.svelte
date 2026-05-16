@@ -3,9 +3,9 @@
 	import { goto } from "$app/navigation";
 	let { data } = $props();
 
-	function addToCart(product) {
+	function handleOrderNow(product) {
 		cart.addItem(product);
-		goto("/ordered");
+		goto("/basket");
 	}
 </script>
 
@@ -45,7 +45,7 @@
 				<button
 					onclick={(e) => {
 						e.preventDefault();
-						addToCart(item);
+						handleOrderNow(item);
 					}}
 					class="cursor-pointer bg-soft-sage text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-rustic-terracotta transition-colors shadow-lg shadow-soft-sage/20 relative z-10"
 				>

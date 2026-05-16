@@ -3,8 +3,8 @@ export const prerender = true;
 export async function load() {
 
 	return {
-		title: 'Home. Lorem ipsum dolor sit.',
+		title: 'Craft Your Perfect Countryside Brew',
 		description:
-			'Libero error reprehenderit, expedita enim, praesentium animi natus modi odio ipsam nemo, quisquam voluptates? Ipsum voluptas necessitatibus culpa. Accusamus eveniet eaque cum.',
+			'Indulge in our nature-inspired drink collection. Craft your own custom beverage with adjustable sweetness, cream, and ice levels, then track your order from our rustic kitchen to your doorstep.',
 	}
 }

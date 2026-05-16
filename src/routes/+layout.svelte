@@ -7,6 +7,7 @@
 	let navs = [
 		{ path: "/about", text: "About" },
 		{ path: "/product", text: "Product" },
+		{ path: "/confirmed", text: "My Orders" },
 	];
 </script>
 
@@ -35,11 +36,11 @@
 			</a>
 		{/each}
 		<a 
-			href="/ordered" 
+			href="/basket" 
 			class="flex items-center gap-2 bg-soft-sage text-white px-4 py-2 rounded-full font-bold hover:bg-rustic-terracotta transition-all shadow-md shadow-soft-sage/20"
 		>
 			<span>🧺</span>
-			<span>Order</span>
+			<span>Basket</span>
 			{#if cart.count > 0}
 				<span class="bg-white text-rustic-terracotta px-2 py-0.5 rounded-full text-xs animate-bounce">
 					{cart.count}

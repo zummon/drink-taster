@@ -2,7 +2,7 @@ export const prerender = true;
 
 export async function load({ url }) {
 	return {
-		siteName: 'Drink Taster',
+		siteName: 'Countryside Sips',
 		pathname: url.pathname
 	}
 }

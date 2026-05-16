@@ -3,9 +3,9 @@
 	import { goto } from "$app/navigation";
 	let { data } = $props();
 
-	function addToCart() {
+	function handleOrderNow() {
 		cart.addItem(data.product);
-		goto("/ordered");
+		goto("/basket");
 	}
 </script>
 
@@ -52,10 +52,10 @@
 
 			<div class="space-y-4">
 				<button
-					onclick={addToCart}
+					onclick={handleOrderNow}
 					class="cursor-pointer w-full bg-soft-sage text-white py-4 rounded-2xl text-lg font-bold hover:bg-rustic-terracotta transition-all shadow-xl shadow-soft-sage/20 active:scale-95"
 				>
-					Add to Cart
+					Add to Basket
 				</button>
 
 				<a

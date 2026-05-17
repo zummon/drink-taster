@@ -9,7 +9,15 @@
 		{ path: "/product", text: "Product" },
 		{ path: "/confirmed", text: "My Orders" },
 	];
+
+	let imageSrc =
+		"https://i.postimg.cc/Ghb8TxB0/Screenshot-2026-05-17-082658.png";
 </script>
+
+<svelte:head>
+	<meta property="og:image" content={imageSrc} />
+	<meta property="twitter:image" content={imageSrc} />
+</svelte:head>
 
 <div class="flex flex-wrap justify-between glass-card m-4 px-6 py-2">
 	<div class="py-3 px-4">
@@ -35,14 +43,16 @@
 				{item.text}
 			</a>
 		{/each}
-		<a 
-			href="/basket" 
+		<a
+			href="/basket"
 			class="flex items-center gap-2 bg-soft-sage text-white px-4 py-2 rounded-full font-bold hover:bg-rustic-terracotta transition-all shadow-md shadow-soft-sage/20"
 		>
 			<span>🧺</span>
 			<span>Basket</span>
 			{#if cart.count > 0}
-				<span class="bg-white text-rustic-terracotta px-2 py-0.5 rounded-full text-xs animate-bounce">
+				<span
+					class="bg-white text-rustic-terracotta px-2 py-0.5 rounded-full text-xs animate-bounce"
+				>
 					{cart.count}
 				</span>
 			{/if}

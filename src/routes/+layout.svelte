@@ -9,15 +9,9 @@
 		{ path: "/product", text: "Product" },
 		{ path: "/confirmed", text: "My Orders" },
 	];
-
-	let imageSrc =
-		"https://i.postimg.cc/Ghb8TxB0/Screenshot-2026-05-17-082658.png";
 </script>
 
-<svelte:head>
-	<meta property="og:image" content={imageSrc} />
-	<meta property="twitter:image" content={imageSrc} />
-</svelte:head>
+<svelte:head></svelte:head>
 
 <div class="flex flex-wrap justify-between glass-card m-4 px-6 py-2">
 	<div class="py-3 px-4">
@@ -67,7 +61,14 @@
 <div class="my-8 mr-4 ml-auto glass-card w-fit p-1">
 	<p class="py-3 px-6 text-sm italic opacity-80">
 		<span class="font-medium">
-			Made with ♡ by Antigravity & Teerapat Anantarattanachai<br />
+			Made with ♡ by Ai, <a
+				class="text-amber-800 underline"
+				target="_blank"
+				href="https://github.com/zummon"
+			>
+				Teerapat Anantarattanachai
+			</a>
+			<br />
 			Something breaks, needs upgrade. Let me know
 		</span>
 	</p>
